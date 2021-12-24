@@ -1,0 +1,44 @@
+version: '3.3'
+services:
+  bbb-streamer:
+    image: 9e80dd2e959b
+#    image: a5f84ca133d3
+    container_name: liveStreaming
+    shm_size: '2gb'
+    environment:
+      # BigBlueButton Server url:
+      - BBB_URL=https://dev.stream.video.wiki/bigbluebutton/api/
+      # BigBlueButton secret:
+      - BBB_SECRET=vOIxIbVyXS6xI4qiX94QO1kxoT42ITp58bJb3W1yDKI
+      # BigBlueButton meetingID:
+      - BBB_MEETING_ID=2ece330d-f2ee-4253-9650-b81ee6fb41cd
+      # start meeting (optional):
+      - BBB_START_MEETING=false
+      # attendee password (optional - has to be set to the attendee password of moodle/greenlight or any other frontend to allow joining via their links):
+      - BBB_ATTENDEE_PASSWORD=
+      # moderator password (optional - has to be set to the moderator password of moodle/greenlight or any other frontend to allow joining via their links):
+      - BBB_MODERATOR_PASSWORD=
+      # meeting title (optional):
+      - BBB_MEETING_TITLE=liveStreaming Test
+      # download / save BigBlueButton meeting
+      - BBB_DOWNLOAD_MEETING=
+      # play intro file (can be a local file in videodata folder e.g. /video/intro.mp4 or a url of a mediastream e.g. https://my.intro.stream)
+      - BBB_INTRO=
+      # begin the intro at position (optional, e.g. 00:00:05)
+      - BBB_BEGIN_INTRO_AT=
+      # end intro after (optional, e.g. 01:00:00 - after one hour)
+      - BBB_END_INTRO_AT=
+      # Media server url:
+      - BBB_STREAM_URL=["rtmp://a.rtmp.youtube.com/live2/ugam-vr6f-9dj7-5gh7-6xrm","rtmp://play.stream.video.wiki/stream/ex7c-gyeg-thbd-8oso"]
+      # Resolution to be streamed/downloaded in format WxH (default 1920x1080)
+#      - BBB_STREAM_URL=rtmp://play.stream.video.wiki/stream/i48b-rdq0-jwme-2yj0
+      - BBB_RESOLUTION=1920x1080
+      # stream video bitrate
+      - FFMPEG_STREAM_VIDEO_BITRATE=4000
+      # threads used for stream (0=auto)
+      - FFMPEG_STREAM_THREADS=0
+      # Timezone (default: Europe/Vienna):
+      - TZ=Europe/Vienna
+
+    volumes:
+      - ./videodata:/video
