@@ -60,6 +60,7 @@ ENV TZ Europe/Vienna
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 COPY stream.py ./
+COPY snippet_func.py ./
 COPY chat.py ./
 COPY startStream.sh ./
 COPY docker-entrypoint.sh ./
