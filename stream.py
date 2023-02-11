@@ -138,6 +138,10 @@ def bbb_browser():
     join_url = get_join_url()
     logging.info(join_url)
     browser.get(join_url)
+    time.sleep(10)
+    ch = browser.find_element(By.XPATH, "//i[@class='arrowLeft--1DQRmm icon-bbb-left_arrow']")
+    if ch.is_enabled():
+        ch.click()
 
 
 def create_meeting():
@@ -186,7 +190,7 @@ def get_join_url():
 
 def stream():
     print("here")
-    ffmpeg_stream = 'ffmpeg -use_wallclock_as_timestamps 1 -thread_queue_size 1024 -f x11grab -draw_mouse 0 -s 1920x1080  -i :122 -f alsa -i pulse -ac 2 -c:a aac -b:a 64k -threads 0 -flags +global_header -c:v libx264 -pix_fmt yuv420p -s 1920x1080 -threads 0 -f tee {}'.format(snip_func(args.target))
+    ffmpeg_stream = 'ffmpeg -use_wallclock_as_timestamps 1 -thread_queue_size 4096 -f x11grab -draw_mouse 0 -s 1280x720  -i :122 -f alsa -i pulse -ac 2 -c:a aac -b:a 64k -threads 4 -flags +global_header -c:v libx264 -pix_fmt yuv420p -s 1280x720 -threads 4 -f tee {}'.format(snip_func(args.target))
     print(ffmpeg_stream)
     # ffmpeg_stream = 'ffmpeg -thread_queue_size "%s" -f x11grab -draw_mouse 0 -s %s  -i :%d -thread_queue_size "%s" -f pulse -i default -ac 2 %s -f flv -flvflags no_duration_filesize "%s"' % (
     #     args.ffmpeg_input_thread_queue_size, args.resolution, 122, args.ffmpeg_input_thread_queue_size,
